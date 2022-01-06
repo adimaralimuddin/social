@@ -1,4 +1,5 @@
-import { Outlet, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
+import ProfilePage from "../components/profile/ProfilePage"
 import UserProfileHeader from "../components/profile/UserProfileHeader"
 import ProfileFollowersLayout from "./profile/followers/ProfileFollowersLayout"
 import ProfileFollowingLayout from "./profile/followers/ProfileFollowingLayout"
@@ -6,13 +7,12 @@ import ProfileFriendsLayout from "./profile/followers/ProfileFriendsLayout"
 import ProfileTimelineLayout from "./profile/timeline/ProfileTimelineLayout"
 
 function Profile() {
-
     return (
         <div className="flxC itemCenter h100vh">
             <div className="w100per flxC mxw900">
+                {/* <UserProfileHeader /> */}
 
-                <UserProfileHeader />
-
+                <ProfilePage />
                 <div>
                     <Routes>
                         <Route path='*' element={<ProfileTimelineLayout />} />
@@ -28,3 +28,4 @@ function Profile() {
 }
 
 export default Profile
+

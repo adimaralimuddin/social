@@ -1,21 +1,20 @@
 
 import ProfileAboutLayout from './ProfileAboutLayout'
-import Feeds from '../../Feeds'
-import { profileState } from "../../../state/userState"
+import { ProfilePageStore } from '../../../components/profile/ProfilePage'
+import PostsListsLayout from '../../../views/PostsListsLayout'
 
 function ProfileTimelineLayout() {
 
-
-    const posts = profileState(state => state.posts)
+    const user = ProfilePageStore(state => state.selectedUser)
+    const posts = ProfilePageStore(state => state.posts)
 
     return (
         <div className='flxBetween wrap mlr10'>
             <div className='flx1 flxC mlr10 mt10 mnw200 '>
-                <ProfileAboutLayout />
+                <ProfileAboutLayout user={user} />
             </div>
-            {/* <div className='p10 red'></div> */}
             <div className=' flx2 mlr10 mt10 mnw300 '>
-                <Feeds data={posts} />
+                <PostsListsLayout data={posts}/>
             </div>
         </div>
     )

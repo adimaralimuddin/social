@@ -7,7 +7,8 @@ function CommentWriter({
     onClose,
     focus,
     showReplyWriter,
-    refocus
+    refocus,
+    tryFocus
 }) {
 
     const [open, setOpen] = useState(true);
@@ -20,6 +21,12 @@ function CommentWriter({
         refocus && refocus(bodyRef.current)
     }, [])
 
+    useEffect(() => {
+        if (tryFocus) {
+            bodyRef.current?.focus()
+        }
+    }, [tryFocus])
+
     function onChangeHandler() {
 
     }
@@ -29,23 +36,31 @@ function CommentWriter({
         onPost(bodyRef.current?.value)
     }
 
+    function onBlurHandler() {
+        !focus && setRows(1)
+        // showReplyWriter(false)
+    }
 
     return (
-        <div className="flx relative" >
+        <div className="flx wrap" >
+            {
+                focus &&
+                <div className="relative">
+                    <CancelIcon setter={() => showReplyWriter(false)} />
+                </div>
+            }
             <textarea
 
                 ref={bodyRef}
                 onFocus={() => setRows(5)}
-                onBlur={() => !focus && setRows(1)}
+                onBlur={onBlurHandler}
                 onChange={onChangeHandler}
                 name="" id="" cols="30" rows={rows}
-                className="flx1 m0 br10 p20 mnw100"
+                className="flx1 gains m0 br10 p20 mnw200"
+                draggable={false}
             ></textarea>
             <span className="flxC">
                 <button onClick={onPostHandler}>post</button>
-                {
-                    focus && <CancelIcon setter={() => showReplyWriter(false)} />
-                }
             </span>
         </div>
     )

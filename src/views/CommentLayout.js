@@ -52,7 +52,7 @@ function ReplyLayout({ data, opend, showReplyWriter, onPost }) {
             }
             <div className=" t0 front">
                 {
-                    showReplyWriter && <CommentWriter showReplyWriter={onPost} focus={true} onPost={onPostHandler} />
+                    showReplyWriter && <CommentWriter tryFocus={showReplyWriter} showReplyWriter={onPost} focus={true} onPost={onPostHandler} />
                 }
             </div>
         </div>

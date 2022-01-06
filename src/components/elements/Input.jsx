@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 
 
 function Input(props) {
@@ -25,8 +25,9 @@ function Input(props) {
             </label>
             <input
                 {...props}
+                value={props.value}
                 type="text"
-                className="gains br trans"
+                className="gains br gains"
                 placeholder={labelText}
                 onFocus={onFocusHandler}
                 onBlur={onBLurHandler}

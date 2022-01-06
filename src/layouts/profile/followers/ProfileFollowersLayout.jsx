@@ -1,10 +1,10 @@
+import { ProfilePageStore } from "../../../components/profile/ProfilePage";
 import useMethods from "../../../methods"
-import { profileState } from "../../../state/userState"
 import FollowLayout from "./FollowLayout";
 
 
 function ProfileFollowersLayout() {
-    const followers = profileState(state => state.followers)
+    const followers = ProfilePageStore(s => s.followers)
     const { block, unFollow } = useMethods();
     const options = [unFollow, block]
 

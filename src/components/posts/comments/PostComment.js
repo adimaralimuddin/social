@@ -20,8 +20,8 @@ function PostComment({ data, refocus }) {
 
 
     return (
-        <div>
-            <p className="plr10 white p5 pointer" onClick={() => setOpen(s => !s)}>comments</p>
+        <div className="back flxC h100per trans">
+            <p className="plr20 white p5 pointer " onClick={() => setOpen(s => !s)}>{open ? 'hide comments' : 'show comments'}</p>
             <PostCommentList open={open} onPostHandler={onPostHandler} data={comments} refocus={refocus} />
         </div>
     )
@@ -32,8 +32,10 @@ export default PostComment
 function PostCommentList({ open, data, onPostHandler, refocus }) {
     if (open) {
 
-        return <div className="gains p plr20">
-            {data && data.map(c => <CommentLayout key={c?.id} data={c} />)}
+        return <div className="white p  back flx1 flxC h100per">
+            <div className="flx1">
+                {data && data.map(c => <CommentLayout key={c?.id} data={c} />)}
+            </div>
             <CommentWriter onPost={onPostHandler} refocus={refocus} />
 
         </div>

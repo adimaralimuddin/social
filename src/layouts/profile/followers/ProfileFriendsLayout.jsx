@@ -1,11 +1,11 @@
 
+import { ProfilePageStore } from "../../../components/profile/ProfilePage"
 import useMethods from "../../../methods"
-import { profileState } from "../../../state/userState"
 import FollowLayout from "./FollowLayout"
 
 
 function ProfileFriendsLayout() {
-    const friends = profileState(state => state.friends)
+    const friends = ProfilePageStore(state => state.friends)
     const { block, unFriend } = useMethods()
     const options = [unFriend, block]
 

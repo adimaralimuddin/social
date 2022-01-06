@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import { useRecoilState } from "recoil"
 import useCommentController from "../../../controller/useCommentController"
 import commentState from "../../../state/commentState"
+import { selectedProfileUidState } from "../../../state/userState"
 import ChangerTest from "../../../tester/ChangerTest"
 import Avatars from "../../others/Avatars"
 import CommentItemOption from "./CommentItemOption"
@@ -9,16 +11,13 @@ import CommentWriter from "./CommentWriter"
 
 function CommentItem({ data, setWriteReply }) {
 
-    // const [mounted, setMounted] = useState(true)
+    // console.log({ data });
     const [showOption, setShowOption] = useState(false)
     const [comment, setComment] = useRecoilState(commentState(data?.id))
     const { trashComment, loveComment, postComment } = useCommentController();
 
     useEffect(() => {
-        // if (mounted) {
         setComment(data)
-        // }
-        // return () => setMounted(false)
     }, [])
 
     const onDeleteHandler = () => trashComment(data)
@@ -29,9 +28,9 @@ function CommentItem({ data, setWriteReply }) {
         <div
             onMouseEnter={() => setShowOption(true)}
             onMouseLeave={() => setShowOption(false)}
-            className="flxC  relative ">
+            className="flxC ">
             <div className="textLeft">
-                <Header />
+                <Header data={data} />
             </div>
             {/* <ChangerTest field='body' setter={setComment} /> */}
             <div className="flx flx1  itemCenter">
@@ -90,9 +89,17 @@ function Actions({ data, open, onLove, onClose, onWriteReply }) {
 }
 
 
-function Header() {
-    return <div>
-        <Avatars />
+function Header({ data }) {
+    const set = selectedProfileUidState(state => state.set)
+
+    function onSelect() {
+        set({ uid: 'IbEZzZgVRcPGSofrv2cWQ8BpLkn1' })
+    }
+    return <div className="flx itemCenter">
+        <Link to='/profile' onClick={onSelect}>
+            <Avatars url={data?.AvatarImage} />
+        </Link>
+        <p className="mlr10">{data?.fullName}</p>
     </div>
 }
 
@@ -101,7 +108,7 @@ function Body({ data, onMouseLeave, onMouseEnter }) {
 
 
     return <div
-        className="p10 br m white flx itemCenter pointer relative mnw150"
+        className="p10 br m flx itemCenter pointer  mnw150"
         onMouseLeave={onMouseLeave}
         onMouseEnter={onMouseEnter}
     >

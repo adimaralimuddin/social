@@ -21,7 +21,7 @@ export const postIdContext = create(set => ({
 }))
 
 export const feedsPosts = create(set => ({
-    posts: [],
+    posts: null,
     setPosts: (data) => set({ posts: data })
 }))
 

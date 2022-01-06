@@ -10,17 +10,17 @@ function CommentItemOption({ onDelete, display }) {
         return (
             <div className="relative">
                 <span onClick={toggle} className="material-icons pointer">
-                more_horiz
-            </span>
+                    more_horiz
+                </span>
                 {
-            open && (
-                <div onMouseLeave={toggle} className="absolute t0 r0 pt30">
-                    <div className="white p br10 shadow1 b ">
-                        <button onClick={onDelete}>delete</button>
-                    </div>
-                </div>
-            )
-        }
+                    open && (
+                        <div onMouseLeave={toggle} className="absolute t0 r0 pt30">
+                            <div className="white p br10 shadow1 b ">
+                                <button className="shadow0 white cdark hov-dark8" onClick={onDelete}>delete</button>
+                            </div>
+                        </div>
+                    )
+                }
             </div >
         )
     }

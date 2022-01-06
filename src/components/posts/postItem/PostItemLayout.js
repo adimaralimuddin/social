@@ -7,7 +7,7 @@ import PostItem from "./PostItem"
 function PostItemLayout({ data }) {
 
     return (
-        <div>
+        <div className="back relative">
             <PostItem data={data} />
             <PostComment data={data} />
         </div>

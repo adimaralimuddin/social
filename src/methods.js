@@ -1,4 +1,5 @@
 import useFollow from "./firebase/useFollow"
+import { profileState } from "./state/userState"
 
 
 
@@ -22,4 +23,17 @@ export default function useMethods() {
         unFriend
     }
 
+}
+
+export function isFollowed(uid, followers) {
+    if (followers?.find(e => e == uid)) {
+        return true
+    } return false
+
+}
+
+export function isFriend(uid, friends) {
+    if (Array.isArray(friends) && friends.length > 0 && friends?.map(e => e == uid)) {
+        return true
+    } return null;
 }

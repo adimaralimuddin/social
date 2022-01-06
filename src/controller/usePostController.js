@@ -1,10 +1,11 @@
 import { updateDoc } from "firebase/firestore";
 import usePosts from "../firebase/usePosts";
+import { searchResultContext } from "../layouts/feeds/SearchResultPopLayout";
 
 
 export default function usePostController() {
 
-    const { trash, love, unlove, listen, update } = usePosts();
+    const { trash, love, unlove, listen, update, searchMain } = usePosts();
 
 
     async function listenPost(setter) {
@@ -15,9 +16,8 @@ export default function usePostController() {
         })
     }
 
-    async function trashPost(id) {
-        console.log(id);
-        const deleted = await trash(id)
+    async function trashPost(data) {
+        const deleted = await trash(data)
         console.log(deleted);
     }
 
@@ -35,10 +35,17 @@ export default function usePostController() {
         // return call
     }
 
+    async function SearchMain(val) {
+        searchResultContext.loc.set({ val, isActive: true })
+        const docs = await searchMain(val)
+        searchResultContext.loc.set({ items: docs })
+    }
+
     return {
         trashPost,
         lovePost,
         listenPost,
         updatePost,
+        SearchMain
     }
 }

@@ -1,16 +1,14 @@
 
-import { Link, Route, Routes } from 'react-router-dom'
-import { userState } from './state/userState'
-import Feeds from './layouts/Feeds'
+import { Link, Navigate, Route, Routes } from 'react-router-dom'
+import { profileState, userState } from './state/userState'
 import Home from './layouts/Home'
-import Profile from './layouts/Profile'
 import FeedsLayout from './layouts/FeedsLayout'
 import ProfileLayout from './layouts/profile/ProfileLayout'
+import MyProfile from './components/profile/MyProfile'
 
 export default function useAppRoutes() {
 
     const { routers } = useAppRouters()
-
 
     function popRoutes() {
         return routers.map(route => {
@@ -24,17 +22,17 @@ export default function useAppRoutes() {
         </Routes>
     )
 
-
 }
 
-
 export const useAppRouters = () => {
-    const user = userState(state => state.user)
+    const login = profileState(state => state.isLogin)
 
     const routers = [
-        newRoute('/', <Home />, !user),
-        newRoute('/feeds', <FeedsLayout />, user),
-        newRoute('profile/*', <ProfileLayout />, user),
+        newRoute('/', <Home />, !login),
+        newRoute('/', <FeedsLayout />, login),
+        newRoute('/feeds', <FeedsLayout />, login, '/'),
+        newRoute('profile/*', <ProfileLayout />, login, '/'),
+        newRoute('myprofile/*', <MyProfile />, login, '/'),
     ]
 
     return {
@@ -43,19 +41,23 @@ export const useAppRouters = () => {
 }
 
 
-function newRoute(path, element, condition = true) {
-
+function newRoute(path, element, condition = true, redirect) {
     return {
+        redirect: redirect,
         name: path == '/' ? 'home' : path.replace('/', ''),
-        path, element,
-        condition
+        path,
+        element,
+        condition,
     }
 }
 
 export function dynRoute(route) {
     if (route.condition) {
-        return <Route key={route.name} {...route} />
+        return <Route exact key={route.name} {...route} />
     }
+    // return null
+    return <Route exact key={route.name} path={route?.name || '/*'} element={<Navigate replace to={route?.redirect || '/'} />} />
+
 }
 
 export function DynLink({ router, children }) {

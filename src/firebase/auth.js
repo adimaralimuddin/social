@@ -1,10 +1,14 @@
 
 import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth"
+import { useNavigate } from "react-router-dom";
 import { profileState, userState } from "../state/userState";
 import { auth, db } from "./firebaseConfig"
 import useProfile from "./useProfile";
 
 const useAuth = () => {
+
+    const navigate = useNavigate()
+    const setIsLogin = profileState(state => state.setIsLogin)
 
     const setUserContext = userState(state => state.setUser)
     const { init } = useProfile();
@@ -27,13 +31,21 @@ const useAuth = () => {
     }
 
     function logout() {
-        signOut(auth).then(user => setUserContext(user))
+        signOut(auth).then(user => {
+            setUserContext(user)
+            navigate('/')
+        })
     }
 
     function listen() {
         onAuthStateChanged(auth, user => {
-            setUserContext(user)
-            init(user)
+            if (user) {
+                setUserContext(user)
+                init(user)
+                setIsLogin(true)
+            } else {
+                setIsLogin(false)
+            }
         })
     }
 
